@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,7 +55,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = TravellersGear.MODID, name = TravellersGear.MODNAME, version = TravellersGear.VERSION, dependencies="required-after:Baubles;before:WitchingGadgets")
+@Mod(modid = TravellersGear.MODID, name = TravellersGear.MODNAME, version = TravellersGear.VERSION, dependencies="required-after:Baubles;before:WitchingGadgets;required-after:BiblioCraft;required-after:gregtech")
 public class TravellersGear
 {
 	public static final String MODID = "TravellersGear";
@@ -96,16 +97,18 @@ public class TravellersGear
 
 		int[] dyeColours = {0xffffff, 0xD87F33, 0xB24CD8 , 0x6699D8   , 0xE5E533, 0x7FCC19, 0xF27FA5, 0x4C4C4C, 0x999999   , 0x4C7F99, 0x7F3FB2, 0x334CB2, 0x664C33, 0x667F33, 0x993333, 0x191919};
 		for(int d=0;d<dyeColours.length;d++)
-			GameRegistry.addRecipe(new ShapedOreRecipe(Utils.getColouredItem(new ItemStack(simpleGear,1,0),dyeColours[d]), " s ","www","www", 's',Items.string, 'w',new ItemStack(Blocks.wool,1,d)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,2), "gg ","g g"," gg", 'g',"nuggetGold"));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(Utils.getColouredItem(new ItemStack(simpleGear,1,0),dyeColours[d]), new ItemStack(simpleGear,1,0), new ItemStack(Items.dye,1,(15-d))));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,0),"RSR","WWW","WWW",'R',"ringIron",'S',Items.string,'W',new ItemStack(GameRegistry.findItem("harvestcraft", "wovencottonItem"))));
+				/*GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,2), "gg ","g g"," gg", 'g',"nuggetGold"));
 		if(!OreDictionary.getOres("nuggetSilver").isEmpty())
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,3), "ss ","s s"," ss", 's',"nuggetSilver"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,1), " l ","l l"," i ", 'i',"ingotIron", 'l',Items.leather));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,4), "ll ","ill"," i ", 'i',(!OreDictionary.getOres("nuggetIron").isEmpty()?"nuggetIron":"ingotIron"), 'l',Items.leather));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,5), " l ","lil"," l ", 'i',(!OreDictionary.getOres("nuggetIron").isEmpty()?"nuggetIron":"ingotIron"), 'l',Items.leather));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,6), " l ","pbp"," l ", 'b',Items.enchanted_book, 'p',Items.paper, 'l',"gemLapis"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,3), "ss ","s s"," ss", 's',"nuggetSilver"));*/
+		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,1), " l ","l l"," i ", 'i',"ingotIron", 'l',Items.leather));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,4), "ll ","ill"," i ", 'i',(!OreDictionary.getOres("screwIron").isEmpty()?"screwIron":"ingotIron"), 'l',new ItemStack(GameRegistry.findItem("harvestcraft", "hardenedleatherItem"))));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,5), " l ","lil"," l ", 'i',(!OreDictionary.getOres("screwIron").isEmpty()?"screwIron":"ingotIron"), 'l',new ItemStack(GameRegistry.findItem("harvestcraft", "hardenedleatherItem"))));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(simpleGear,1,6), " l ","pbp"," l ", 'b',Items.enchanted_book, 'p',Items.paper, 'l',"gemEmerald"));
 
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(armorStand), "sfs"," f ","ppp", 'p',"slabWood", 'f',Blocks.fence, 's',"stickWood"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(armorStand), new ItemStack(GameRegistry.findItem("BiblioCraft", "Armor Stand"))));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(GameRegistry.findItem("BiblioCraft", "Armor Stand")),new ItemStack(armorStand)));
 
 		OreDictionary.registerOre("baubleRingGold",new ItemStack(simpleGear,1,2));
 		OreDictionary.registerOre("baubleRingSilver",new ItemStack(simpleGear,1,3));

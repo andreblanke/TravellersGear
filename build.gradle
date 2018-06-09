@@ -21,8 +21,11 @@ version = "1.16.6"
 group= "blusunrize"
 archivesBaseName = "TravellersGear-1.7.10"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "1.7.10-10.13.4.1614-1.7.10"
 	replace '${version}', project.version
     assetDir = "eclipse/assets"
 }
