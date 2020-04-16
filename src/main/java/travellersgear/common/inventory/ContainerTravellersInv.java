@@ -1,5 +1,6 @@
 package travellersgear.common.inventory;
 
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -23,6 +24,7 @@ import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
 
+@InventoryContainer
 public class ContainerTravellersInv extends Container
 {
     /**
@@ -56,7 +58,7 @@ public class ContainerTravellersInv extends Container
 		ModCompatability.setBaubleContainer(invBaubles, this);
 		if(!player.worldObj.isRemote)
 			ModCompatability.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
-		
+
         crafting = addSlot(new SlotCrafting(invPlayer.player, this.craftMatrix, this.craftResult, 0, 144, 36));
 		int i;
 		int j;
@@ -68,7 +70,7 @@ public class ContainerTravellersInv extends Container
             }
         }
         nonInventorySlots = 0+(crafting>=0?5:0);
-        
+
 		vanillaArmor[0] = addSlot(new SlotRestricted(invPlayer, invPlayer.getSizeInventory()-1-0,  6, 26, player, SlotRestricted.SlotType.VANILLA_HELM));
 		vanillaArmor[1] = addSlot(new SlotRestricted(invPlayer, invPlayer.getSizeInventory()-1-1,  6, 44, player, SlotRestricted.SlotType.VANILLA_CHEST));
 		vanillaArmor[2] = addSlot(new SlotRestricted(invPlayer, invPlayer.getSizeInventory()-1-2,  6, 62, player, SlotRestricted.SlotType.VANILLA_LEGS));
@@ -121,7 +123,7 @@ public class ContainerTravellersInv extends Container
 		for (i = 0; i < 9; ++i)
 			if(this.addSlot(new Slot(invPlayer, i, 6 + i*18 +(i>4?10:0), 173))>=0)
 				playerHotbarSlots++;
-		
+
 		this.onCraftMatrixChanged(this.craftMatrix);
 	}
 
@@ -292,7 +294,7 @@ public class ContainerTravellersInv extends Container
 		this.invTG.allowEvents = false;
 		super.putStacksInSlots(stacks);
 	}
-	
+
 	@Override
 	public ItemStack slotClick(int slotNumber, int p_75144_2_, int p_75144_3_, EntityPlayer player)
 	{
@@ -301,7 +303,7 @@ public class ContainerTravellersInv extends Container
 			ClientProxy.equipmentMap.put(player.getCommandSenderName(), this.invTG.stackList);
 		return stack;
 	}
-	
+
 	@Override
 	protected boolean mergeItemStack(ItemStack stack, int start, int end, boolean inverse)
 	{
