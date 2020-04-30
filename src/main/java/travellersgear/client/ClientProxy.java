@@ -39,6 +39,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -76,6 +77,7 @@ public class ClientProxy extends CommonProxy
 {
 	public static HashMap<String, ItemStack[]> equipmentMap = new HashMap<String, ItemStack[]>();
 	public static HashMap<String, ToolDisplayInfo[]> toolDisplayMap = new HashMap<String, ToolDisplayInfo[]>();
+	public static boolean overrideVanillaInventory;
 	public static int[] equipmentButtonPos;
 	public static float activeAbilityGuiSpeed;
 	public static float titleOffset;
@@ -84,6 +86,8 @@ public class ClientProxy extends CommonProxy
 	{
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		cfg.load();
+
+		overrideVanillaInventory = cfg.getBoolean("Override Vanilla Inventory", "Options", true, "Whether the default inventory should be replaced with the Traveller's Gear one.");
 		equipmentButtonPos = cfg.get("Options", "Button Position", new int[]{27,9}, "The position of the Equipment Button in the Inventory").getIntList();
 		activeAbilityGuiSpeed = cfg.getFloat("Radial Speed", "Options", .15f, .05f, 1f, "The speed at which the radial for active abilities opens. Default is 15% per tick, minimum is 5%, maximum is 100%");
 		titleOffset = (float)cfg.get("Options", "Title Offset", 0d, "Configures the vertical offset of the title above the players head. 0 is default, set to 1 to render above the players name, the other offsets will use that scale.").getDouble();
@@ -174,6 +178,17 @@ public class ClientProxy extends CommonProxy
 				bList.add(new GuiButtonGear(106, guiLeft + equipmentButtonPos[0], guiTop + equipmentButtonPos[1]));
 			}
 	}
+
+	@SubscribeEvent
+	public void guiOpened(@NotNull final GuiOpenEvent event) {
+	    final EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+
+	    if (event.gui instanceof GuiInventory && overrideVanillaInventory && !player.capabilities.isCreativeMode) {
+	        event.setCanceled(true);
+
+            TravellersGear.packetHandler.sendToServer(new MessageOpenGui(player, 0));
+        }
+    }
 
 	@SubscribeEvent
 	public void guiPostAction(GuiScreenEvent.ActionPerformedEvent.Post event)
