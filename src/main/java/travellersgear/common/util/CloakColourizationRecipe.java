@@ -1,11 +1,15 @@
 package travellersgear.common.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+
 import travellersgear.common.items.ItemTravellersGear;
 
 public class CloakColourizationRecipe implements IRecipe
@@ -14,7 +18,7 @@ public class CloakColourizationRecipe implements IRecipe
 	public boolean matches(InventoryCrafting par1InventoryCrafting, World par2World)
 	{
 		ItemStack itemstack = null;
-		ArrayList<ItemStack> arraylist = new ArrayList<ItemStack>();
+		List<ItemStack> arraylist = new ArrayList<>();
 
 		for(int i = 0; i < par1InventoryCrafting.getSizeInventory(); i++)
 		{
@@ -40,7 +44,7 @@ public class CloakColourizationRecipe implements IRecipe
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InventoryCrafting par1InventoryCrafting)
+	public ItemStack getCraftingResult(@NotNull final InventoryCrafting par1InventoryCrafting)
 	{
 		ItemStack itemstack = null;
 		int[] aint = new int[3];

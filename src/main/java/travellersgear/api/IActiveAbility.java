@@ -4,13 +4,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
- * This interface can be implemented by any Armor, Bauble, Traveller's Gear
- * Mariculture Jewelry and TCon Gloves+Knapsacks
- * They will then be eligible for the "Active Ability" menu ingame.
+ * This interface can be implemented by any armor, bauble, Traveller's Gear, Mariculture jewelry and Tinker's Construct
+ * gloves and knapsacks.
+ *
+ * They will then be eligible for the "Active Ability" menu in-game.
+ *
  * @author BluSunrize
  */
-public interface IActiveAbility
-{
-	public boolean canActivate(EntityPlayer player, ItemStack stack, boolean isInHand);
-	public void activate(EntityPlayer player, ItemStack stack);
+public interface IActiveAbility {
+
+    boolean canActivate(EntityPlayer player, ItemStack stack, boolean isInHand);
+
+    void activate(EntityPlayer player, ItemStack stack);
 }

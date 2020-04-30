@@ -13,7 +13,7 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import travellersgear.client.handlers.CustomizeableGuiHandler;
+import travellersgear.client.handlers.CustomizableGuiHandler;
 
 public class GuiTravellersInvCustomization extends GuiScreen
 {
@@ -42,7 +42,7 @@ public class GuiTravellersInvCustomization extends GuiScreen
 		this.guiLeft = (this.width-this.xSize)/2;
 		this.guiTop = (this.height-this.ySize)/2;
 		this.buttonList.clear();
-		for(GuiButtonMoveableElement but : CustomizeableGuiHandler.moveableInvElements)
+		for(GuiButtonMoveableElement but : CustomizableGuiHandler.movableInvElements)
 		{
 			but.xPosition = guiLeft+but.elementX;
 			but.yPosition = guiTop+but.elementY;
@@ -50,14 +50,14 @@ public class GuiTravellersInvCustomization extends GuiScreen
 			this.buttonList.add(but);
 		}
 		int start= presetMenu!=null?presetMenu.selectedOption:0;
-		presetMenu = new GuiDropdownMenu(this.buttonList.size(), guiLeft+218,guiTop+20, 64,10, 100, CustomizeableGuiHandler.presets.keySet().toArray(new String[0]));
+		presetMenu = new GuiDropdownMenu(this.buttonList.size(), guiLeft+218,guiTop+20, 64,10, 100, CustomizableGuiHandler.presets.keySet().toArray(new String[0]));
 		presetMenu.selectedOption = start;
 		this.buttonList.add(presetMenu);
 
 		start= textureMenu!=null?textureMenu.selectedOption:0;
-		String[] txts = new String[CustomizeableGuiHandler.invTextures.length];
+		String[] txts = new String[CustomizableGuiHandler.invTextures.length];
 		for(int t=0;t<txts.length;t++)
-			txts[t] = CustomizeableGuiHandler.invTextures[t].getResourcePath().substring(CustomizeableGuiHandler.invTextures[t].getResourcePath().lastIndexOf("/")).replace("/inventory_", "");
+			txts[t] = CustomizableGuiHandler.invTextures[t].getResourcePath().substring(CustomizableGuiHandler.invTextures[t].getResourcePath().lastIndexOf("/")).replace("/inventory_", "");
 		textureMenu = new GuiDropdownMenu(this.buttonList.size(), guiLeft+218,guiTop+120, 64,10, 100, txts);
 		textureMenu.selectedOption = start;
 		this.buttonList.add(textureMenu);
@@ -68,19 +68,19 @@ public class GuiTravellersInvCustomization extends GuiScreen
 	{
 		if(button.equals(presetMenu))
 		{
-			CustomizeableGuiHandler.InvPreset ps = CustomizeableGuiHandler.presets.values().toArray(new CustomizeableGuiHandler.InvPreset[0])[presetMenu.selectedOption];
-			CustomizeableGuiHandler.moveableInvElements = new ArrayList<GuiButtonMoveableElement>();
+			CustomizableGuiHandler.InvPreset ps = CustomizableGuiHandler.presets.values().toArray(new CustomizableGuiHandler.InvPreset[0])[presetMenu.selectedOption];
+			CustomizableGuiHandler.movableInvElements = new ArrayList<GuiButtonMoveableElement>();
 			for(GuiButtonMoveableElement bme : ps.elements)
-				CustomizeableGuiHandler.moveableInvElements.add(bme.copy());
-			CustomizeableGuiHandler.invTexture = ps.texture;
-			for(int irl=0;irl<CustomizeableGuiHandler.invTextures.length;irl++)
-				if(CustomizeableGuiHandler.invTextures[irl].equals(ps.texture))
+				CustomizableGuiHandler.movableInvElements.add(bme.copy());
+			CustomizableGuiHandler.invTexture = ps.texture;
+			for(int irl = 0; irl< CustomizableGuiHandler.invTextures.length; irl++)
+				if(CustomizableGuiHandler.invTextures[irl].equals(ps.texture))
 					textureMenu.selectedOption = irl;
 			this.initGui();
 		}
 		if(button.equals(textureMenu))
 		{
-			CustomizeableGuiHandler.invTexture = CustomizeableGuiHandler.invTextures[textureMenu.selectedOption];
+			CustomizableGuiHandler.invTexture = CustomizableGuiHandler.invTextures[textureMenu.selectedOption];
 			this.initGui();
 		}
 	}
@@ -90,7 +90,7 @@ public class GuiTravellersInvCustomization extends GuiScreen
 	{
 		GL11.glColor3f(1, 1, 1);
 		this.drawWorldBackground(0);
-		this.mc.getTextureManager().bindTexture(CustomizeableGuiHandler.invTexture);
+		this.mc.getTextureManager().bindTexture(CustomizableGuiHandler.invTexture);
 		this.drawTexturedModalRect(guiLeft,guiTop, 0,0, xSize,ySize);
 		GL11.glEnable(3042);
 		super.drawScreen(mX, mY, f);
@@ -153,8 +153,8 @@ public class GuiTravellersInvCustomization extends GuiScreen
 	{
 		if(player.worldObj.isRemote)
 		{
-			CustomizeableGuiHandler.instance.writeElementsToConfig(CustomizeableGuiHandler.instance.invConfig);
-			for(GuiButtonMoveableElement but : CustomizeableGuiHandler.moveableInvElements)
+			CustomizableGuiHandler.instance.writeElementsToConfig(CustomizableGuiHandler.instance.invConfig);
+			for(GuiButtonMoveableElement but : CustomizableGuiHandler.movableInvElements)
 			{
 				but.implementedGui = null;
 			}

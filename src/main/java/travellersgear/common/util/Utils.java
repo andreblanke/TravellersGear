@@ -25,11 +25,11 @@ public class Utils
 				TravellersGear.packetHandler.sendToAll(new MessageNBTSync(player));
 //				PacketPipeline.INSTANCE.sendToAll(new PacketNBTSync(player));
 		}
-		else if(ModCompatability.getPseudoTravellersGearData(stack)!=null && ModCompatability.getPseudoTravellersGearData(stack).length>=4)
-			if(ModCompatability.getPseudoTravellersGearData(stack)[1]!=null)
+		else if(ModCompatibility.getPseudoTravellersGearData(stack)!=null && ModCompatibility.getPseudoTravellersGearData(stack).length>=4)
+			if(ModCompatibility.getPseudoTravellersGearData(stack)[1]!=null)
 				try{
 					ItemStack stack2 = stack;
-					((Method)ModCompatability.getPseudoTravellersGearData(stack)[1]).invoke(stack.getItem(), player,stack);
+					((Method) ModCompatibility.getPseudoTravellersGearData(stack)[1]).invoke(stack.getItem(), player,stack);
 					if(!Utils.itemsMatch(stack2, stack, true, true))
 						TravellersGear.packetHandler.sendToAll(new MessageNBTSync(player));
 //						PacketPipeline.INSTANCE.sendToAll(new PacketNBTSync(player));
@@ -44,17 +44,17 @@ public class Utils
 			{
 				((ITravellersGear)stack.getItem()).onTravelGearEquip(player, stack);
 				if(player.worldObj.isRemote && player.worldObj.isRemote && ClientProxy.equipmentMap.get(player.getCommandSenderName())!=null)
-					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatability.getTravellersGearSlot(stack)] = stack;
+					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatibility.getTravellersGearSlot(stack)] = stack;
 			}
-			else if(ModCompatability.getPseudoTravellersGearData(stack)!=null && ModCompatability.getPseudoTravellersGearData(stack).length>=4)
+			else if(ModCompatibility.getPseudoTravellersGearData(stack)!=null && ModCompatibility.getPseudoTravellersGearData(stack).length>=4)
 			{
-				if(ModCompatability.getPseudoTravellersGearData(stack)[2]!=null)
+				if(ModCompatibility.getPseudoTravellersGearData(stack)[2]!=null)
 					try{
-						((Method)ModCompatability.getPseudoTravellersGearData(stack)[2]).invoke(stack.getItem(), player,stack);
+						((Method) ModCompatibility.getPseudoTravellersGearData(stack)[2]).invoke(stack.getItem(), player,stack);
 					}catch(Exception e)
 					{}
 				if(player.worldObj.isRemote && player.worldObj.isRemote && ClientProxy.equipmentMap.get(player.getCommandSenderName())!=null)
-					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatability.getTravellersGearSlot(stack)] = stack;
+					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatibility.getTravellersGearSlot(stack)] = stack;
 			}
 	}
 	public static void unequipTravGear(EntityPlayer player, ItemStack stack)
@@ -64,17 +64,17 @@ public class Utils
 			{
 				((ITravellersGear)stack.getItem()).onTravelGearUnequip(player, stack);
 				if(player.worldObj.isRemote && ClientProxy.equipmentMap.get(player.getCommandSenderName())!=null)
-					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatability.getTravellersGearSlot(stack)] = null;
+					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatibility.getTravellersGearSlot(stack)] = null;
 			}
-			else if(ModCompatability.getPseudoTravellersGearData(stack)!=null && ModCompatability.getPseudoTravellersGearData(stack).length>=4)
+			else if(ModCompatibility.getPseudoTravellersGearData(stack)!=null && ModCompatibility.getPseudoTravellersGearData(stack).length>=4)
 			{
-				if(ModCompatability.getPseudoTravellersGearData(stack)[3]!=null)
+				if(ModCompatibility.getPseudoTravellersGearData(stack)[3]!=null)
 					try{
-						((Method)ModCompatability.getPseudoTravellersGearData(stack)[3]).invoke(stack.getItem(), player,stack);
+						((Method) ModCompatibility.getPseudoTravellersGearData(stack)[3]).invoke(stack.getItem(), player,stack);
 					}catch(Exception e)
 					{}
 				if(player.worldObj.isRemote && ClientProxy.equipmentMap.get(player.getCommandSenderName())!=null)
-					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatability.getTravellersGearSlot(stack)] = null;
+					ClientProxy.equipmentMap.get(player.getCommandSenderName())[ModCompatibility.getTravellersGearSlot(stack)] = null;
 			}
 	}
 

@@ -53,6 +53,6 @@ public class PacketSlotSync extends AbstractPacket
 			return;
 		Entity player = world.getEntityByID(this.playerid);
 		if(player instanceof EntityPlayer)
-			CommonProxy.hiddenSlots.put(player.getCommandSenderName(), hidden);
+			CommonProxy.HIDDEN_SLOTS.put(player.getCommandSenderName(), hidden);
 	}
 }

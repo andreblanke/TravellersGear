@@ -31,6 +31,7 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -50,14 +51,14 @@ import travellersgear.client.gui.GuiConfigDisplayItems;
 import travellersgear.client.gui.GuiTravellersInv;
 import travellersgear.client.gui.GuiTravellersInvCustomization;
 import travellersgear.client.handlers.ActiveAbilityHandler;
-import travellersgear.client.handlers.CustomizeableGuiHandler;
+import travellersgear.client.handlers.CustomizableGuiHandler;
 import travellersgear.common.CommonProxy;
 import travellersgear.common.blocks.TileEntityArmorStand;
 import travellersgear.common.inventory.SlotRestricted;
 import travellersgear.common.network.MessageOpenGui;
 import travellersgear.common.network.MessageRequestNBTSync;
 import travellersgear.common.network.MessageSlotSync;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import travellersgear.common.util.TGClientCommand;
 import travellersgear.common.util.Utils;
 import baubles.api.BaublesApi;
@@ -88,7 +89,7 @@ public class ClientProxy extends CommonProxy
 		titleOffset = (float)cfg.get("Options", "Title Offset", 0d, "Configures the vertical offset of the title above the players head. 0 is default, set to 1 to render above the players name, the other offsets will use that scale.").getDouble();
 		cfg.save();
 
-		CustomizeableGuiHandler.instance.preInit(event);
+		CustomizableGuiHandler.instance.preInit(event);
 	}
 	@SubscribeEvent
 	public void loadTextures(TextureStitchEvent event)
@@ -105,7 +106,7 @@ public class ClientProxy extends CommonProxy
 			c++;
 			customN = new ResourceLocation("travellersgear","textures/gui/inventory_custom"+c+".png");
 		}
-		CustomizeableGuiHandler.invTextures = txts.toArray(new ResourceLocation[0]);
+		CustomizableGuiHandler.invTextures = txts.toArray(new ResourceLocation[0]);
 	}
 	boolean resourceExists(ResourceLocation rl)
 	{
@@ -144,7 +145,7 @@ public class ClientProxy extends CommonProxy
 
 			int guiLeft = (event.gui.width - xSize) / 2;
 			int guiTop = (event.gui.height - ySize) / 2;
-			if( !event.gui.mc.thePlayer.getActivePotionEffects().isEmpty() && ModCompatability.isNeiHidden())
+			if( !event.gui.mc.thePlayer.getActivePotionEffects().isEmpty() && ModCompatibility.isNeiHidden())
 				guiLeft = 160 + (event.gui.width - xSize - 200) / 2;
 			event.buttonList.add(new GuiButtonGear(106, guiLeft + equipmentButtonPos[0], guiTop + equipmentButtonPos[1]));
 		}
@@ -168,26 +169,26 @@ public class ClientProxy extends CommonProxy
 				int ySize = 166;
 				int guiLeft = (event.gui.width - xSize) / 2;
 				int guiTop = (event.gui.height - ySize) / 2;
-				if( !event.gui.mc.thePlayer.getActivePotionEffects().isEmpty() && ModCompatability.isNeiHidden())
+				if( !event.gui.mc.thePlayer.getActivePotionEffects().isEmpty() && ModCompatibility.isNeiHidden())
 					guiLeft = 160 + (event.gui.width - xSize - 200) / 2;
 				bList.add(new GuiButtonGear(106, guiLeft + equipmentButtonPos[0], guiTop + equipmentButtonPos[1]));
 			}
 	}
+
 	@SubscribeEvent
 	public void guiPostAction(GuiScreenEvent.ActionPerformedEvent.Post event)
 	{
 		if(event.gui instanceof GuiInventory && event.button.getClass().equals(GuiButtonGear.class))
 		{
-			boolean[] hidden = new boolean[CustomizeableGuiHandler.moveableInvElements.size()];
+			boolean[] hidden = new boolean[CustomizableGuiHandler.movableInvElements.size()];
 			for(int bme=0;bme<hidden.length;bme++)
-				hidden[bme] = CustomizeableGuiHandler.moveableInvElements.get(bme).hideElement;
+				hidden[bme] = CustomizableGuiHandler.movableInvElements.get(bme).hideElement;
 			TravellersGear.packetHandler.sendToServer(new MessageSlotSync(event.gui.mc.thePlayer,hidden));
 //			PacketPipeline.INSTANCE.sendToServer(new PacketSlotSync(event.gui.mc.thePlayer,hidden));
 			TravellersGear.packetHandler.sendToServer(new MessageOpenGui(event.gui.mc.thePlayer, 0));
 //			PacketPipeline.INSTANCE.sendToServer(new PacketOpenGui(event.gui.mc.thePlayer, 0));
 		}
 	}
-
 
 	@SubscribeEvent
 	public void renderPlayerSpecialPre(RenderPlayerEvent.Specials.Pre event)
@@ -379,7 +380,7 @@ public class ClientProxy extends CommonProxy
 			return;
 		String title=StatCollector.translateToLocal(TravellersGearAPI.getTitleForPlayer(event.entityPlayer));
 		if(!RenderManager.instance.livingPlayer.equals(event.entityPlayer) && title!=null && !title.isEmpty() && !event.entityPlayer.isSneaking() && !Minecraft.getMinecraft().gameSettings.hideGUI)
-		{	
+		{
 			double d0 = event.entityPlayer.lastTickPosX + (event.entityPlayer.posX - event.entityPlayer.lastTickPosX) * (double)event.partialRenderTick;
 			double d1 = event.entityPlayer.lastTickPosY + (event.entityPlayer.posY - event.entityPlayer.lastTickPosY) * (double)event.partialRenderTick;
 			double d2 = event.entityPlayer.lastTickPosZ + (event.entityPlayer.posZ - event.entityPlayer.lastTickPosZ) * (double)event.partialRenderTick;
@@ -438,7 +439,7 @@ public class ClientProxy extends CommonProxy
 	{
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(ActiveAbilityHandler.instance);
-		CustomizeableGuiHandler.instance.init();
+		CustomizableGuiHandler.instance.init();
 
 		FMLCommonHandler.instance().bus().register(new KeyHandler());
 		RenderingRegistry.registerBlockHandler(new BlockRenderArmorStand());

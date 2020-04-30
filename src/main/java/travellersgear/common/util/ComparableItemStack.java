@@ -3,24 +3,23 @@ package travellersgear.common.util;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ComparableItemStack
-{
-	final ItemStack stack;
-	public ComparableItemStack(ItemStack stack)
-	{
+public final class ComparableItemStack {
+
+	private final ItemStack stack;
+
+	public ComparableItemStack(final ItemStack stack) {
 		this.stack = stack;
 	}
-	
-	public ItemStack getStack()
-	{
-		return this.stack;
-	}
-	
-	@Override
-	public boolean equals(Object o)
-	{
-		if(!(o instanceof ComparableItemStack))
-			return false;
-		return OreDictionary.itemMatches(this.stack, ((ComparableItemStack)o).getStack(), true);
+
+    @Override
+    public boolean equals(final Object object)
+    {
+        if (!(object instanceof ComparableItemStack))
+            return false;
+        return OreDictionary.itemMatches(this.stack, ((ComparableItemStack) object).getStack(), true);
+    }
+
+	public ItemStack getStack() {
+		return stack;
 	}
 }

@@ -1,31 +1,37 @@
 package travellersgear.common.util;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import travellersgear.TravellersGear;
 
-public class TGCreativeTab extends CreativeTabs
-{
-	public TGCreativeTab()
-	{
+public final class TGCreativeTab extends CreativeTabs {
+
+	public TGCreativeTab() {
 		super("travellersgear");
 	}
 
-	@Override
+    @Override
+    @Nullable
+    @Contract(pure = true)
     @SideOnly(Side.CLIENT)
-	public Item getTabIconItem()
-	{
+	public Item getTabIconItem() {
 		return null;
 	}
 
-	@Override
+    @Override
+    @NotNull
+    @Contract(value = " -> new", pure = true)
     @SideOnly(Side.CLIENT)
-	public ItemStack getIconItemStack()
-	{
-		return new ItemStack(TravellersGear.simpleGear,1,6);
+	public ItemStack getIconItemStack() {
+		return new ItemStack(TravellersGear.simpleGear, 1, 6);
 	}
-
 }

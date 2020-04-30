@@ -6,51 +6,44 @@ import java.util.List;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
+
 import travellersgear.TravellersGear;
 import travellersgear.common.network.MessageOpenGui;
 
-public class TGClientCommand extends CommandBase
-{
+public final class TGClientCommand extends CommandBase {
 
 	@Override
-	public int getRequiredPermissionLevel()
-	{
+	public int getRequiredPermissionLevel() {
 		return 4;
 	}
 
 	@Override
-	public String getCommandName() 
-	{
+	public String getCommandName() {
 		return "travellersgear";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender sender)
-	{
+	public String getCommandUsage(ICommandSender sender) {
 		return null;
 	}
 
 	@Override
-	public void processCommand(ICommandSender sender, String[] args)
-	{
-		if(sender instanceof EntityPlayer && args.length>=1 && args[0].equalsIgnoreCase("gui") && ((EntityPlayer)sender).worldObj.isRemote)
-			TravellersGear.packetHandler.sendToServer(new MessageOpenGui((EntityPlayer) sender,2));
-		if(sender instanceof EntityPlayer && args.length>=1 && args[0].equalsIgnoreCase("toolDisplay") && ((EntityPlayer)sender).worldObj.isRemote)
-			TravellersGear.packetHandler.sendToServer(new MessageOpenGui((EntityPlayer) sender,3));
+	public void processCommand(ICommandSender sender, String[] args) {
+		if (sender instanceof EntityPlayer && args.length >= 1 && args[0].equalsIgnoreCase("gui") && ((EntityPlayer)sender).worldObj.isRemote)
+			TravellersGear.packetHandler.sendToServer(new MessageOpenGui((EntityPlayer) sender, 2));
+		if (sender instanceof EntityPlayer && args.length >= 1 && args[0].equalsIgnoreCase("toolDisplay") && ((EntityPlayer)sender).worldObj.isRemote)
+			TravellersGear.packetHandler.sendToServer(new MessageOpenGui((EntityPlayer) sender, 3));
 	}
 
 	@Override
-	public boolean canCommandSenderUseCommand(ICommandSender sender)
-	{
+	public boolean canCommandSenderUseCommand(ICommandSender sender) {
 		return true;
 	}
 
 	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args)
-	{
-		if(args==null || (args.length==1&&args[0].isEmpty()))
-			return Arrays.asList(new String[]{"gui","toolDisplay"});
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args) {
+		if (args == null || (args.length == 1 && args[0].isEmpty()))
+			return Arrays.asList("gui","toolDisplay");
 		return null;
 	}
 

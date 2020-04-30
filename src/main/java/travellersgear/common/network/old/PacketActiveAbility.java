@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import travellersgear.api.IActiveAbility;
 import travellersgear.api.TravellersGearAPI;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaublesApi;
 
 public class PacketActiveAbility extends AbstractPacket
@@ -59,8 +59,8 @@ public class PacketActiveAbility extends AbstractPacket
 		//FIXME
 //		PacketPipeline.INSTANCE.sendToAll(new PacketNBTSync(player));
 	}
-	
-	
+
+
 	public static void performAbility(EntityPlayer player, int slot)
 	{
 		switch(slot)
@@ -113,7 +113,7 @@ public class PacketActiveAbility extends AbstractPacket
 		case 21:
 		case 22:
 		case 23: // MARICULTURE
-			IInventory mariInv = ModCompatability.getMariInventory(player);
+			IInventory mariInv = ModCompatibility.getMariInventory(player);
 //			if(mariInv!=null)
 //				if(!Utils.itemsMatch(mariInv.getStackInSlot(slot-12-9), item, true, true))
 //					mariInv.setInventorySlotContents(slot-12-9, item);
@@ -121,7 +121,7 @@ public class PacketActiveAbility extends AbstractPacket
 			break;
 		case 24:
 		case 25: // TCON
-			IInventory tconInv = ModCompatability.getTConArmorInv(player);
+			IInventory tconInv = ModCompatibility.getTConArmorInv(player);
 //			if(tconInv!=null)
 //				if(!Utils.itemsMatch(tconInv.getStackInSlot(slot-15-9), item, true, true))
 //					tconInv.setInventorySlotContents(slot-15-9, item);

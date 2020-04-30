@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 
@@ -39,7 +39,7 @@ public class SlotRestricted extends Slot
 		case TRAVEL_SHOULDER:
 		case TRAVEL_VAMBRACE:
 		case TRAVEL_TITLE:
-			return ModCompatability.getTravellersGearSlot(stack) == this.type.ordinal()-4;
+			return ModCompatibility.getTravellersGearSlot(stack) == this.type.ordinal()-4;
 		case BAUBLE_BELT:
 			return stack.getItem() instanceof IBauble && ((IBauble)stack.getItem()).getBaubleType(stack) == BaubleType.BELT && ((IBauble)stack.getItem()).canEquip(stack, this.player);
 		case BAUBLE_NECK:
@@ -49,22 +49,22 @@ public class SlotRestricted extends Slot
 		case MARI_BRACELET:
 		case MARI_NECKLACE:
 		case MARI_RING:
-			String jewelType = ModCompatability.getMariJeweleryType(stack);
+			String jewelType = ModCompatibility.getMariJeweleryType(stack);
 			return jewelType!=null && jewelType.equalsIgnoreCase(this.type.name().substring(5));
 		case TINKERS_GLOVE:
-			return ModCompatability.canEquipTConAccessory(stack, 1);
+			return ModCompatibility.canEquipTConAccessory(stack, 1);
 		case TINKERS_BAG:
-			return ModCompatability.canEquipTConAccessory(stack, 2);
+			return ModCompatibility.canEquipTConAccessory(stack, 2);
 		case TINKERS_BELT:
-			return ModCompatability.canEquipTConAccessory(stack, 3);
+			return ModCompatibility.canEquipTConAccessory(stack, 3);
 		case TINKERS_MASK:
-			return ModCompatability.canEquipTConAccessory(stack, 0);
+			return ModCompatibility.canEquipTConAccessory(stack, 0);
 		case TINKERS_HEART_R:
-			return ModCompatability.canEquipTConAccessory(stack, 6);
+			return ModCompatibility.canEquipTConAccessory(stack, 6);
 		case TINKERS_HEART_Y:
-			return ModCompatability.canEquipTConAccessory(stack, 5);
+			return ModCompatibility.canEquipTConAccessory(stack, 5);
 		case TINKERS_HEART_G:
-			return ModCompatability.canEquipTConAccessory(stack, 4);
+			return ModCompatibility.canEquipTConAccessory(stack, 4);
 		default:
 			return false;
 		}

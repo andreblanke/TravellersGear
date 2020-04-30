@@ -10,7 +10,7 @@ import net.minecraftforge.common.DimensionManager;
 import travellersgear.TravellersGear;
 import travellersgear.api.IActiveAbility;
 import travellersgear.api.TravellersGearAPI;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -93,7 +93,7 @@ public class MessageActiveAbility implements IMessage
 		case 16: // BAUBLES
 			IInventory baubInv = BaublesApi.getBaubles(player);
 			activateItem(baubInv.getStackInSlot(slot-4-9), player, false);
-			ModCompatability.setPlayerBaubles(player, baubInv);
+			ModCompatibility.setPlayerBaubles(player, baubInv);
 			break;
 		case 17:
 		case 18:
@@ -106,12 +106,12 @@ public class MessageActiveAbility implements IMessage
 		case 21:
 		case 22:
 		case 23: // MARICULTURE
-			IInventory mariInv = ModCompatability.getMariInventory(player);
+			IInventory mariInv = ModCompatibility.getMariInventory(player);
 			activateItem(mariInv.getStackInSlot(slot-12-9), player, false);
 			break;
 		case 24:
 		case 25: // TCON
-			IInventory tconInv = ModCompatability.getTConArmorInv(player);
+			IInventory tconInv = ModCompatibility.getTConArmorInv(player);
 			activateItem(tconInv.getStackInSlot(slot-15-9), player, false);
 			break;
 		default:

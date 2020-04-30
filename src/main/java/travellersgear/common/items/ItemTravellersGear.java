@@ -18,6 +18,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import travellersgear.TravellersGear;
 import travellersgear.api.ITravellersGear;
 import travellersgear.client.ModelSimpleGear;
@@ -28,13 +30,27 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import vazkii.botania.api.item.ICosmeticAttachable;
 
 @Optional.Interface(iface = "vazkii.botania.api.item.ICosmeticAttachable", modid = "Botania")
-public class ItemTravellersGear extends Item implements IBauble, ITravellersGear, vazkii.botania.api.item.ICosmeticAttachable
+public final class ItemTravellersGear extends Item implements IBauble, ITravellersGear, ICosmeticAttachable
 {
 	public static String[] subNames = {"cloak","belt","ringGold","ringSilver","pauldrons","vambraces", "title"};
 	IIcon[] icons = new IIcon[subNames.length];
-	static String[] titles = {"treepuncher","titan","librarian","bursar","archchancellor","justicar","explorer","defender","seeker","boxFox","freshPrince"};
+
+	private static final String[] titles = {
+	    "treepuncher",
+        "titan",
+        "librarian",
+        "bursar",
+        "archchancellor",
+        "justicar",
+        "explorer",
+        "defender",
+        "seeker",
+        "boxFox",
+        "freshPrince"
+	};
 
 	public ItemTravellersGear()
 	{
@@ -209,7 +225,7 @@ public class ItemTravellersGear extends Item implements IBauble, ITravellersGear
 	}
 
 	@Override
-	public int getColorFromItemStack(ItemStack stack, int pass)
+	public int getColorFromItemStack(@NotNull ItemStack stack, int pass)
 	{
 		String subName = stack.getItemDamage()<subNames.length?subNames[stack.getItemDamage()]:"";
 		if( !subName.startsWith("cloak") || !stack.hasTagCompound())
@@ -222,20 +238,17 @@ public class ItemTravellersGear extends Item implements IBauble, ITravellersGear
 			return tag.hasKey("colour")?tag.getInteger("colour") : 0xffffff;
 		}
 	}
-	public void setColorForItemStack(ItemStack stack, int colour)
+	public void setColorForItemStack(@NotNull ItemStack stack, int colour)
 	{
 		String subName = stack.getItemDamage()<subNames.length?subNames[stack.getItemDamage()]:"";
-		if( !subName.startsWith("cloak") )
-			return;
-		else
-		{
-			if(!stack.hasTagCompound())
-				stack.setTagCompound(new NBTTagCompound());
-			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("display");
-			tag.setInteger("colour",colour);
-			stack.getTagCompound().setTag("display",tag);
-		}
-	}
+        if (subName.startsWith("cloak")) {
+            if(!stack.hasTagCompound())
+                stack.setTagCompound(new NBTTagCompound());
+            NBTTagCompound tag = stack.getTagCompound().getCompoundTag("display");
+            tag.setInteger("colour",colour);
+            stack.getTagCompound().setTag("display",tag);
+        }
+    }
 
 	@Override
 	public WeightedRandomChestContent getChestGenBase(ChestGenHooks chest, Random random, WeightedRandomChestContent original)
@@ -247,16 +260,16 @@ public class ItemTravellersGear extends Item implements IBauble, ITravellersGear
 		return original;
 	}
 
-	@Optional.Method(modid = "Botania")
-	public ItemStack getCosmeticItem(ItemStack stack)
+	@Nullable
+    @Optional.Method(modid = "Botania")
+	public ItemStack getCosmeticItem(@NotNull ItemStack stack)
 	{
 		if(!stack.hasTagCompound())
 			return null;
-		ItemStack cosmetic = ItemStack.loadItemStackFromNBT(stack.getTagCompound().getCompoundTag("botaniaCosmeticOverride"));
-		return cosmetic;
+        return ItemStack.loadItemStackFromNBT(stack.getTagCompound().getCompoundTag("botaniaCosmeticOverride"));
 	}
 	@Optional.Method(modid = "Botania")
-	public void setCosmeticItem(ItemStack stack, ItemStack cosmetic)
+	public void setCosmeticItem(@NotNull ItemStack stack, ItemStack cosmetic)
 	{
 		if(!stack.hasTagCompound())
 			stack.setTagCompound(new NBTTagCompound());

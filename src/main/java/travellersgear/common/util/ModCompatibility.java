@@ -11,7 +11,7 @@ import travellersgear.TravellersGear;
 import travellersgear.api.ITravellersGear;
 import cpw.mods.fml.common.Loader;
 
-public class ModCompatability
+public class ModCompatibility
 {
 	static Class<?> clazz_TPlayerStats;
 	static Class<?> clazz_IAccessory;
@@ -213,8 +213,8 @@ public class ModCompatability
 
 	public static boolean isStackPseudoTravellersGear(ItemStack stack)
 	{
-		for(ComparableItemStack cis : TravellersGear.additionalTravelersGear.keySet())
-			if(cis.equals(new ComparableItemStack(stack)))
+		for (ComparableItemStack cis : TravellersGear.additionalTravelersGear.keySet())
+			if (cis.equals(new ComparableItemStack(stack)))
 				return true;
 		return false;
 	}

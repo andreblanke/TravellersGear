@@ -58,7 +58,7 @@ public class TileRenderArmorStand extends TileEntitySpecialRenderer
 	FakeClientPlayer fakepl;
 	RenderPlayer renderPlayer;
 
-	static ResourceLocation texture = new ResourceLocation("travellersgear:textures/models/armorstand.png");
+	private static final ResourceLocation texture = new ResourceLocation("travellersgear:textures/models/armorstand.png");
 
 	public TileRenderArmorStand()
 	{

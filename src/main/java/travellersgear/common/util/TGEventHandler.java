@@ -83,7 +83,7 @@ public class TGEventHandler
 
 
 			for(ItemStack stack : TravellersGearAPI.getExtendedInventory(event.player))
-				if(stack!=null && ModCompatability.getTravellersGearSlot(stack)!=-1)
+				if(stack!=null && ModCompatibility.getTravellersGearSlot(stack)!=-1)
 					Utils.tickTravGear(event.player, stack);
 		}
 		if(event.phase.equals(TickEvent.Phase.END) && event.player!=null)
@@ -241,7 +241,7 @@ public class TGEventHandler
 	//
 	//		return list.toArray(new ItemStack[0]);
 	//	}
-	//	
+	//
 	public Object[][] buildEventGearList(EntityPlayer player)
 	{
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
@@ -267,7 +267,7 @@ public class TGEventHandler
 
 		if(TravellersGear.MARI)
 		{
-			IInventory inv = ModCompatability.getMariInventory(player);
+			IInventory inv = ModCompatibility.getMariInventory(player);
 			if(inv!=null)
 				for(int i=0; i<inv.getSizeInventory(); i++)
 					if(inv.getStackInSlot(i)!=null && inv.getStackInSlot(i).getItem() instanceof IEventGear)
@@ -275,7 +275,7 @@ public class TGEventHandler
 		}
 		if(TravellersGear.TCON)
 		{
-			IInventory inv = ModCompatability.getTConArmorInv(player);
+			IInventory inv = ModCompatibility.getTConArmorInv(player);
 			if(inv!=null)
 				for(int i=1; i<3; i++)
 					if(inv.getStackInSlot(i)!=null && inv.getStackInSlot(i).getItem() instanceof IEventGear)
@@ -328,12 +328,12 @@ public class TGEventHandler
 		case 21:
 		case 22:
 		case 23: // MARICULTURE
-			IInventory mariInv = ModCompatability.getMariInventory(player);
+			IInventory mariInv = ModCompatibility.getMariInventory(player);
 			triggerItemEvent(mariInv.getStackInSlot(slot-12-9), player, false, event);
 			break;
 		case 24:
 		case 25: // TCON
-			IInventory tconInv = ModCompatability.getTConArmorInv(player);
+			IInventory tconInv = ModCompatibility.getTConArmorInv(player);
 			triggerItemEvent(tconInv.getStackInSlot(slot-15-9), player, false, event);
 			break;
 		default:

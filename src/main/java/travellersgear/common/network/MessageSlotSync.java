@@ -54,7 +54,7 @@ public class MessageSlotSync implements IMessage
 	//			Entity player = world.getEntityByID(message.playerid);
 	//			if(!(player instanceof EntityPlayer))
 	//				return null;
-	//			
+	//
 	//			for(int i=0; i<message.targetedSlots.length; i++)
 	//				((EntityPlayer)player).inventory.mainInventory[message.targetedSlots[i]] = message.items[i];
 	//			return null;
@@ -70,7 +70,7 @@ public class MessageSlotSync implements IMessage
 				return null;
 			Entity player = world.getEntityByID(message.playerid);
 			if(player instanceof EntityPlayer)
-				CommonProxy.hiddenSlots.put(player.getCommandSenderName(), message.hidden);
+				CommonProxy.HIDDEN_SLOTS.put(player.getCommandSenderName(), message.hidden);
 			return null;
 		}
 	}

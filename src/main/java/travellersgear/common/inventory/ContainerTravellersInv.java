@@ -16,10 +16,10 @@ import travellersgear.TravellersGear;
 import travellersgear.api.TravellersGearAPI;
 import travellersgear.client.ClientProxy;
 import travellersgear.client.gui.GuiButtonMoveableElement;
-import travellersgear.client.handlers.CustomizeableGuiHandler;
+import travellersgear.client.handlers.CustomizableGuiHandler;
 import travellersgear.common.CommonProxy;
 import travellersgear.common.network.MessageNBTSync;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
@@ -34,7 +34,7 @@ public class ContainerTravellersInv extends Container
     public IInventory craftResult = new InventoryCraftResult();
 //	public InventoryBaubles invBaubles;
 	public IInventory invBaubles;
-	public InventoryTG invTG;
+	public TravellersGearCreativeTabs invTG;
 	public IInventory invMari;
 	public IInventory invTConArmor;
 	EntityPlayer player = null;
@@ -51,13 +51,13 @@ public class ContainerTravellersInv extends Container
 	public ContainerTravellersInv(InventoryPlayer invPlayer)
 	{
 		this.player = invPlayer.player;
-		this.invTG = new InventoryTG(this, player);
+		this.invTG = new TravellersGearCreativeTabs(this, player);
 		if(!player.worldObj.isRemote)
 			this.invTG.stackList = TravellersGearAPI.getExtendedInventory(player);
-		this.invBaubles = ModCompatability.getNewBaublesInv(player);
-		ModCompatability.setBaubleContainer(invBaubles, this);
+		this.invBaubles = ModCompatibility.getNewBaublesInv(player);
+		ModCompatibility.setBaubleContainer(invBaubles, this);
 		if(!player.worldObj.isRemote)
-			ModCompatability.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
+			ModCompatibility.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
 
         crafting = addSlot(new SlotCrafting(invPlayer.player, this.craftMatrix, this.craftResult, 0, 144, 36));
 		int i;
@@ -92,7 +92,7 @@ public class ContainerTravellersInv extends Container
 			nonInventorySlots+=(baubles[0]>=0?1:0)+(baubles[1]>=0?1:0)+(baubles[2]>=0?1:0)+(baubles[3]>=0?1:0);
 		}
 
-		this.invMari = ModCompatability.getMariInventory(player);
+		this.invMari = ModCompatibility.getMariInventory(player);
 		if(TravellersGear.MARI && invMari!=null)
 		{
 			mari[0]=addSlot(new SlotRestricted(this.invMari, 0, 60, 98, player, SlotRestricted.SlotType.MARI_RING));
@@ -101,7 +101,7 @@ public class ContainerTravellersInv extends Container
 			nonInventorySlots+=(mari[0]>=0?1:0)+(mari[1]>=0?1:0)+(mari[2]>=0?1:0);
 		}
 
-		this.invTConArmor = ModCompatability.getTConArmorInv(player);
+		this.invTConArmor = ModCompatibility.getTConArmorInv(player);
 		if(TravellersGear.TCON && invTConArmor!=null)
 		{
 			tcon[0]=addSlot(new SlotRestricted(this.invTConArmor, 1, 78, 98, player, SlotRestricted.SlotType.TINKERS_GLOVE));
@@ -152,7 +152,7 @@ public class ContainerTravellersInv extends Container
         this.craftResult.setInventorySlotContents(0, (ItemStack)null);
  		if (!player.worldObj.isRemote)
 		{
-			ModCompatability.setPlayerBaubles(player, invBaubles);
+			ModCompatibility.setPlayerBaubles(player, invBaubles);
 			TravellersGearAPI.setExtendedInventory(player, this.invTG.stackList);
 			TravellersGear.packetHandler.sendToAll(new MessageNBTSync(player));
 //			PacketPipeline.INSTANCE.sendToAll(new PacketNBTSync(player));
@@ -179,9 +179,9 @@ public class ContainerTravellersInv extends Container
 					return null;
 				slot.onSlotChange(itemstack1, itemstack);
 			}
-			else if(ModCompatability.getTravellersGearSlot(itemstack)>=0)
+			else if(ModCompatibility.getTravellersGearSlot(itemstack)>=0)
 			{
-				int targetSlot = ModCompatability.getTravellersGearSlot(itemstack);
+				int targetSlot = ModCompatibility.getTravellersGearSlot(itemstack);
 				if(travGear[targetSlot]!=-1 && targetSlot>=0 && targetSlot<=3)
 				{
 					if (!mergeItemStack(itemstack1, travGear[0]+targetSlot, travGear[0]+targetSlot+1, false))
@@ -218,33 +218,33 @@ public class ContainerTravellersInv extends Container
 				if (!mergeItemStack(itemstack1, j + 5, j + 6, false))
 					return null;
 			}
-			else if(TravellersGear.MARI && ModCompatability.isMariJewelry(itemstack))
+			else if(TravellersGear.MARI && ModCompatibility.isMariJewelry(itemstack))
 			{
-				int valSlot = ModCompatability.getMariJeweleryType(itemstack).contains("BRACELET")?1 : ModCompatability.getMariJeweleryType(itemstack).contains("NECKLACE")?2 : 0;
+				int valSlot = ModCompatibility.getMariJeweleryType(itemstack).contains("BRACELET")?1 : ModCompatibility.getMariJeweleryType(itemstack).contains("NECKLACE")?2 : 0;
 				if (!mergeItemStack(itemstack1, mari[0]+valSlot, mari[0]+valSlot+1, false))
 					return null;
 			}
-			else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(itemstack1, 1))
+			else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(itemstack1, 1))
 			{
 				if (!mergeItemStack(itemstack1, tcon[0], tcon[0]+1, false))
 					return null;
 			}
-			else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(itemstack1, 2))
+			else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(itemstack1, 2))
 			{
 				if (!mergeItemStack(itemstack1, tcon[1], tcon[1]+1, false))
 					return null;
 			}
-			else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(itemstack1, 6))
+			else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(itemstack1, 6))
 			{
 				if (!mergeItemStack(itemstack1, tcon[2], tcon[2]+1, false))
 					return null;
 			}
-			else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(itemstack1, 5))
+			else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(itemstack1, 5))
 			{
 				if (!mergeItemStack(itemstack1, tcon[3], tcon[3]+1, false))
 					return null;
 			}
-			else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(itemstack1, 4))
+			else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(itemstack1, 4))
 			{
 				if (!mergeItemStack(itemstack1, tcon[4], tcon[4]+1, false))
 					return null;
@@ -254,7 +254,7 @@ public class ContainerTravellersInv extends Container
 				if (!mergeItemStack(itemstack1, tcon[5], tcon[5]+1, false))
 					return null;
 			}
-*/			else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(itemstack1, 0))
+*/			else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(itemstack1, 0))
 			{
 				if (!mergeItemStack(itemstack1, tcon[5], tcon[5]+1, false))
 					return null;
@@ -290,7 +290,7 @@ public class ContainerTravellersInv extends Container
 	@Override
 	public void putStacksInSlots(ItemStack[] stacks)
 	{
-		ModCompatability.baubleInvBlockEvents(invBaubles, true);
+		ModCompatibility.baubleInvBlockEvents(invBaubles, true);
 		this.invTG.allowEvents = false;
 		super.putStacksInSlots(stacks);
 	}
@@ -468,9 +468,9 @@ public class ContainerTravellersInv extends Container
 	@Override
 	protected Slot addSlotToContainer(Slot slot)
 	{
-		if(player.worldObj.isRemote && CustomizeableGuiHandler.moveableInvElements!=null && CustomizeableGuiHandler.moveableInvElements.size()>this.inventorySlots.size())
+		if(player.worldObj.isRemote && CustomizableGuiHandler.movableInvElements !=null && CustomizableGuiHandler.movableInvElements.size()>this.inventorySlots.size())
 		{
-			GuiButtonMoveableElement bme = CustomizeableGuiHandler.moveableInvElements.get(this.inventorySlots.size());
+			GuiButtonMoveableElement bme = CustomizableGuiHandler.movableInvElements.get(this.inventorySlots.size());
 			if(bme!=null)
 			{
 				if(bme.hideElement)
@@ -484,9 +484,9 @@ public class ContainerTravellersInv extends Container
 				slot.xDisplayPosition = bme.elementX+1;
 				slot.yDisplayPosition = bme.elementY+1;
 			}
-		}else if(CommonProxy.hiddenSlots.containsKey(player.getCommandSenderName()))
+		}else if(CommonProxy.HIDDEN_SLOTS.containsKey(player.getCommandSenderName()))
 		{
-			boolean[] hidden = CommonProxy.hiddenSlots.get(player.getCommandSenderName());
+			boolean[] hidden = CommonProxy.HIDDEN_SLOTS.get(player.getCommandSenderName());
 			if(hidden!=null && hidden.length>this.inventorySlots.size() && hidden[this.inventorySlots.size()])
 			{
 				IInventory iinv = slot.inventory;

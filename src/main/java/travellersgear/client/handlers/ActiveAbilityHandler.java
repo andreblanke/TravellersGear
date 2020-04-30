@@ -23,7 +23,7 @@ import travellersgear.api.TravellersGearAPI;
 import travellersgear.client.KeyHandler;
 import travellersgear.common.network.MessageActiveAbility;
 import travellersgear.common.network.old.PacketActiveAbility;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaublesApi;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -61,7 +61,7 @@ public class ActiveAbilityHandler
 
 		if(TravellersGear.MARI)
 		{
-			IInventory inv = ModCompatability.getMariInventory(player);
+			IInventory inv = ModCompatibility.getMariInventory(player);
 			if(inv!=null)
 				for(int i=0; i<inv.getSizeInventory(); i++)
 					if(inv.getStackInSlot(i)!=null && inv.getStackInSlot(i).getItem() instanceof IActiveAbility && ((IActiveAbility)inv.getStackInSlot(i).getItem()).canActivate(player, inv.getStackInSlot(i), false) )
@@ -69,7 +69,7 @@ public class ActiveAbilityHandler
 		}
 		if(TravellersGear.TCON)
 		{
-			IInventory inv = ModCompatability.getTConArmorInv(player);
+			IInventory inv = ModCompatibility.getTConArmorInv(player);
 			if(inv!=null)
 				for(int i=1; i<3; i++)
 					if(inv.getStackInSlot(i)!=null && inv.getStackInSlot(i).getItem() instanceof IActiveAbility && ((IActiveAbility)inv.getStackInSlot(i).getItem()).canActivate(player, inv.getStackInSlot(i), false) )

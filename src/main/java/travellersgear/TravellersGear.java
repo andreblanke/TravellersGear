@@ -1,6 +1,7 @@
 package travellersgear;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,7 +32,6 @@ import travellersgear.common.network.MessagePlayerInventorySync;
 import travellersgear.common.network.MessageRequestNBTSync;
 import travellersgear.common.network.MessageSlotSync;
 import travellersgear.common.network.MessageTileUpdate;
-import travellersgear.common.network.old.PacketPipeline;
 import travellersgear.common.util.CloakColourizationRecipe;
 import travellersgear.common.util.ComparableItemStack;
 import travellersgear.common.util.TGCreativeTab;
@@ -63,7 +63,7 @@ public class TravellersGear
 	public static final Logger logger = LogManager.getLogger(MODID);
 
 	@Instance(MODID)
-	public static TravellersGear instance = new TravellersGear();	
+	public static TravellersGear instance = new TravellersGear();
 
 	@SidedProxy(clientSide="travellersgear.client.ClientProxy", serverSide="travellersgear.common.CommonProxy")
 	public static CommonProxy proxy;
@@ -158,7 +158,7 @@ public class TravellersGear
 //		PacketPipeline.INSTANCE.postInitialise();
 	}
 
-	public static HashMap<ComparableItemStack, Object[]> additionalTravelersGear = new HashMap<ComparableItemStack, Object[]>();
+	public static Map<ComparableItemStack, Object[]> additionalTravelersGear = new HashMap<>();
 
 	public static boolean BAUBLES;
 	public static boolean MARI;

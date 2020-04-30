@@ -7,11 +7,15 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
-public interface IEventGear
-{
-	public void onUserDamaged(LivingHurtEvent event, ItemStack stack);
-	public void onUserAttacking(AttackEntityEvent event, ItemStack stack);
-	public void onUserJump(LivingJumpEvent event, ItemStack stack);
-	public void onUserFall(LivingFallEvent event, ItemStack stack);
-	public void onUserTargeted(LivingSetAttackTargetEvent event, ItemStack stack);
+public interface IEventGear {
+
+    void onUserDamaged(LivingHurtEvent event, ItemStack stack);
+
+    void onUserAttacking(AttackEntityEvent event, ItemStack stack);
+
+    void onUserJump(LivingJumpEvent event, ItemStack stack);
+
+    void onUserFall(LivingFallEvent event, ItemStack stack);
+
+    void onUserTargeted(LivingSetAttackTargetEvent event, ItemStack stack);
 }

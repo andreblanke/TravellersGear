@@ -13,7 +13,7 @@ import travellersgear.api.TravellersGearAPI;
 import travellersgear.client.ClientProxy;
 import travellersgear.common.blocks.TileEntityArmorStand;
 import travellersgear.common.network.MessageNBTSync;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
@@ -22,7 +22,7 @@ public class ContainerArmorStand extends Container
 {
 	protected TileEntityArmorStand tileEntity;
 	public IInventory invBaubles;
-	public InventoryTG invTG;
+	public TravellersGearCreativeTabs invTG;
 	public IInventory invMari;
 	public IInventory invTConArmor;
 	private final EntityPlayer player;
@@ -39,18 +39,18 @@ public class ContainerArmorStand extends Container
 		this.player = inventoryPlayer.player;
 		this.tileEntity = te;
 
-		this.invBaubles = ModCompatability.getNewBaublesInv(player);
-		ModCompatability.setBaubleContainer(invBaubles, this);
+		this.invBaubles = ModCompatibility.getNewBaublesInv(player);
+		ModCompatibility.setBaubleContainer(invBaubles, this);
 		if(!player.worldObj.isRemote)
-			ModCompatability.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
+			ModCompatibility.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
 
-		this.invTG = new InventoryTG(this, player);
+		this.invTG = new TravellersGearCreativeTabs(this, player);
 		if(!player.worldObj.isRemote)
 			this.invTG.stackList = TravellersGearAPI.getExtendedInventory(player);
 
-		this.invMari = ModCompatability.getMariInventory(player);
+		this.invMari = ModCompatibility.getMariInventory(player);
 
-		this.invTConArmor = ModCompatability.getTConArmorInv(player);
+		this.invTConArmor = ModCompatibility.getTConArmorInv(player);
 
 
 		this.tileEntity = te;
@@ -137,7 +137,7 @@ public class ContainerArmorStand extends Container
 		super.onContainerClosed(player);
 		if (!player.worldObj.isRemote)
 		{
-			ModCompatability.setPlayerBaubles(player, invBaubles);
+			ModCompatibility.setPlayerBaubles(player, invBaubles);
 			TravellersGearAPI.setExtendedInventory(player, this.invTG.stackList);
 			TravellersGear.packetHandler.sendToAll(new MessageNBTSync(player));
 //			PacketPipeline.INSTANCE.sendToAll(new PacketNBTSync(player));
@@ -146,7 +146,7 @@ public class ContainerArmorStand extends Container
 	@Override
 	public void putStacksInSlots(ItemStack[] stacks)
 	{
-		ModCompatability.baubleInvBlockEvents(invBaubles, true);
+		ModCompatibility.baubleInvBlockEvents(invBaubles, true);
 		this.invTG.allowEvents = false;
 		super.putStacksInSlots(stacks);
 	}
@@ -237,9 +237,9 @@ public class ContainerArmorStand extends Container
 							return null;
 					}
 				}
-				else if(ModCompatability.getTravellersGearSlot(stackInSlot)>=0)
+				else if(ModCompatibility.getTravellersGearSlot(stackInSlot)>=0)
 				{
-					int type = ModCompatability.getTravellersGearSlot(stackInSlot);
+					int type = ModCompatibility.getTravellersGearSlot(stackInSlot);
 					if(invTG.getStackInSlot(type)==null)
 					{
 						if(!mergeItemStack(stackInSlot, tgStart+type, tgStart+type+1, true))
@@ -251,9 +251,9 @@ public class ContainerArmorStand extends Container
 					if(player.worldObj.isRemote)
 						ClientProxy.equipmentMap.put(player.getCommandSenderName(), this.invTG.stackList);
 				}
-				else if(TravellersGear.MARI && ModCompatability.isMariJewelry(stackInSlot))
+				else if(TravellersGear.MARI && ModCompatibility.isMariJewelry(stackInSlot))
 				{
-					int type = ModCompatability.getMariJeweleryType(stackInSlot).contains("BRACELET")?1 : ModCompatability.getMariJeweleryType(stackInSlot).contains("NECKLACE")?2 : 0;
+					int type = ModCompatibility.getMariJeweleryType(stackInSlot).contains("BRACELET")?1 : ModCompatibility.getMariJeweleryType(stackInSlot).contains("NECKLACE")?2 : 0;
 					if(invMari.getStackInSlot(type)==null)
 					{
 						if(!mergeItemStack(stackInSlot, mariStart+type, mariStart+type+1, true))
@@ -263,7 +263,7 @@ public class ContainerArmorStand extends Container
 						if(!mergeItemStack(stackInSlot, playerSlots+11+type, playerSlots+11+type+1, true))
 							return null;
 				}
-				else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(stackInSlot, 1))
+				else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(stackInSlot, 1))
 				{
 					if(invTConArmor.getStackInSlot(1)==null)
 					{

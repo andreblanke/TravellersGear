@@ -27,12 +27,12 @@ import travellersgear.TravellersGear;
 import travellersgear.api.TGSaveData;
 import travellersgear.api.TravellersGearAPI;
 import travellersgear.client.KeyHandler;
-import travellersgear.client.handlers.CustomizeableGuiHandler;
+import travellersgear.client.handlers.CustomizableGuiHandler;
 import travellersgear.common.inventory.ContainerTravellersInv;
 import travellersgear.common.inventory.SlotNull;
 import travellersgear.common.inventory.SlotRestricted;
 import travellersgear.common.network.MessageItemShoutout;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 
 public class GuiTravellersInv extends GuiContainer
 {
@@ -100,24 +100,24 @@ public class GuiTravellersInv extends GuiContainer
 		super.initGui();
 		this.buttonList.clear();
 
-		for(GuiButtonMoveableElement but : CustomizeableGuiHandler.moveableInvElements)
+		for(GuiButtonMoveableElement but : CustomizableGuiHandler.movableInvElements)
 		{
 			but.xPosition = guiLeft+but.elementX;
 			but.yPosition = guiTop+but.elementY;
 		}
 
-		int start = CustomizeableGuiHandler.elementsNonSlotStart;
-		drawPlayer = CustomizeableGuiHandler.moveableInvElements.get(start+0);
-		drawName = CustomizeableGuiHandler.moveableInvElements.get(start+1);
-		drawTitle = CustomizeableGuiHandler.moveableInvElements.get(start+2);
-		drawXP = CustomizeableGuiHandler.moveableInvElements.get(start+3);
-		drawHealth = CustomizeableGuiHandler.moveableInvElements.get(start+4);
-		drawArmor = CustomizeableGuiHandler.moveableInvElements.get(start+5);
-		drawSpeed = CustomizeableGuiHandler.moveableInvElements.get(start+6);
-		drawDamage = CustomizeableGuiHandler.moveableInvElements.get(start+7);
-		drawPotionEffects = CustomizeableGuiHandler.moveableInvElements.get(start+8);
+		int start = CustomizableGuiHandler.elementsNonSlotStart;
+		drawPlayer = CustomizableGuiHandler.movableInvElements.get(start+0);
+		drawName = CustomizableGuiHandler.movableInvElements.get(start+1);
+		drawTitle = CustomizableGuiHandler.movableInvElements.get(start+2);
+		drawXP = CustomizableGuiHandler.movableInvElements.get(start+3);
+		drawHealth = CustomizableGuiHandler.movableInvElements.get(start+4);
+		drawArmor = CustomizableGuiHandler.movableInvElements.get(start+5);
+		drawSpeed = CustomizableGuiHandler.movableInvElements.get(start+6);
+		drawDamage = CustomizableGuiHandler.movableInvElements.get(start+7);
+		drawPotionEffects = CustomizableGuiHandler.movableInvElements.get(start+8);
 		if(TravellersGear.THAUM)
-			drawVisDiscounts = CustomizeableGuiHandler.moveableInvElements.get(start+9);
+			drawVisDiscounts = CustomizableGuiHandler.movableInvElements.get(start+9);
 	}
 
 	public int[] getGuiPos()
@@ -129,14 +129,14 @@ public class GuiTravellersInv extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float f, int mX, int mZ)
 	{
 		GL11.glColor3f(1, 1, 1);
-		this.mc.getTextureManager().bindTexture(CustomizeableGuiHandler.invTexture);
+		this.mc.getTextureManager().bindTexture(CustomizableGuiHandler.invTexture);
 		this.drawTexturedModalRect(guiLeft,guiTop, 0,0, xSize,ySize);
 		GL11.glEnable(3042);
 		//this.drawTexturedModalRect(guiLeft+23,guiTop+25, 202,175, 54,72);
-		for(int slot=0; slot<CustomizeableGuiHandler.elementsNonSlotStart; slot++)
+		for(int slot = 0; slot< CustomizableGuiHandler.elementsNonSlotStart; slot++)
 			if(slot<this.inventorySlots.inventorySlots.size() && !(this.inventorySlots.inventorySlots.get(slot) instanceof SlotNull))
 			{
-				GuiButtonMoveableElement bme = CustomizeableGuiHandler.moveableInvElements.get(slot);
+				GuiButtonMoveableElement bme = CustomizableGuiHandler.movableInvElements.get(slot);
 				this.drawTexturedModalRect(bme.xPosition, bme.yPosition, 220,0, 18,18);
 				if(slot<playerSlotStart && !((Slot)this.inventorySlots.inventorySlots.get(slot)).getHasStack())
 				{
@@ -172,7 +172,7 @@ public class GuiTravellersInv extends GuiContainer
 		GL11.glBlendFunc(770, 771);
 		GL11.glColor3f(1, 1, 1);
 		/**DRAW ICONS*/
-		this.mc.getTextureManager().bindTexture(CustomizeableGuiHandler.invTexture);
+		this.mc.getTextureManager().bindTexture(CustomizableGuiHandler.invTexture);
 		//HEALTH
 		if(!drawHealth.hideElement)
 		{
@@ -258,12 +258,12 @@ public class GuiTravellersInv extends GuiContainer
 		{
 			scale = .5f;
 			GL11.glScalef(scale,scale,scale);
-			ModCompatability.drawTCAspect((int)((drawVisDiscounts.elementX+00)/scale), (int)((drawVisDiscounts.elementY+10)/scale), "aer");
-			ModCompatability.drawTCAspect((int)((drawVisDiscounts.elementX+00)/scale), (int)((drawVisDiscounts.elementY+20)/scale), "ignis");
-			ModCompatability.drawTCAspect((int)((drawVisDiscounts.elementX+20)/scale), (int)((drawVisDiscounts.elementY+10)/scale), "terra");
-			ModCompatability.drawTCAspect((int)((drawVisDiscounts.elementX+20)/scale), (int)((drawVisDiscounts.elementY+20)/scale), "aqua");
-			ModCompatability.drawTCAspect((int)((drawVisDiscounts.elementX+40)/scale), (int)((drawVisDiscounts.elementY+10)/scale), "ordo");
-			ModCompatability.drawTCAspect((int)((drawVisDiscounts.elementX+40)/scale), (int)((drawVisDiscounts.elementY+20)/scale), "perditio");
+			ModCompatibility.drawTCAspect((int)((drawVisDiscounts.elementX+00)/scale), (int)((drawVisDiscounts.elementY+10)/scale), "aer");
+			ModCompatibility.drawTCAspect((int)((drawVisDiscounts.elementX+00)/scale), (int)((drawVisDiscounts.elementY+20)/scale), "ignis");
+			ModCompatibility.drawTCAspect((int)((drawVisDiscounts.elementX+20)/scale), (int)((drawVisDiscounts.elementY+10)/scale), "terra");
+			ModCompatibility.drawTCAspect((int)((drawVisDiscounts.elementX+20)/scale), (int)((drawVisDiscounts.elementY+20)/scale), "aqua");
+			ModCompatibility.drawTCAspect((int)((drawVisDiscounts.elementX+40)/scale), (int)((drawVisDiscounts.elementY+10)/scale), "ordo");
+			ModCompatibility.drawTCAspect((int)((drawVisDiscounts.elementX+40)/scale), (int)((drawVisDiscounts.elementY+20)/scale), "perditio");
 			GL11.glScalef(1/scale,1/scale,1/scale);
 		}
 
@@ -320,12 +320,12 @@ public class GuiTravellersInv extends GuiContainer
 			fontRendererObj.drawString( StatCollector.translateToLocal("TG.guitext.visDiscount")+":", (int)(drawVisDiscounts.elementX/scale),(int)((drawVisDiscounts.elementY)/scale), 0x777777);
 			scale = .5f;
 			GL11.glScalef(scale,scale,scale);
-			fontRendererObj.drawString((int)(ModCompatability.getTCVisDiscount(this.player, "aer")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+10)/scale), (int)Math.floor((drawVisDiscounts.elementY+12)/scale), 0x777777);
-			fontRendererObj.drawString((int)(ModCompatability.getTCVisDiscount(this.player, "ignis")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+10)/scale), (int)Math.floor((drawVisDiscounts.elementY+22)/scale), 0x777777);
-			fontRendererObj.drawString((int)(ModCompatability.getTCVisDiscount(this.player, "terra")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+30)/scale), (int)Math.floor((drawVisDiscounts.elementY+12)/scale), 0x777777);
-			fontRendererObj.drawString((int)(ModCompatability.getTCVisDiscount(this.player, "aqua")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+30)/scale), (int)Math.floor((drawVisDiscounts.elementY+22)/scale), 0x777777);
-			fontRendererObj.drawString((int)(ModCompatability.getTCVisDiscount(this.player, "ordo")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+50)/scale), (int)Math.floor((drawVisDiscounts.elementY+12)/scale), 0x777777);
-			fontRendererObj.drawString((int)(ModCompatability.getTCVisDiscount(this.player, "perditio")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+50)/scale), (int)Math.floor((drawVisDiscounts.elementY+22)/scale), 0x777777);
+			fontRendererObj.drawString((int)(ModCompatibility.getTCVisDiscount(this.player, "aer")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+10)/scale), (int)Math.floor((drawVisDiscounts.elementY+12)/scale), 0x777777);
+			fontRendererObj.drawString((int)(ModCompatibility.getTCVisDiscount(this.player, "ignis")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+10)/scale), (int)Math.floor((drawVisDiscounts.elementY+22)/scale), 0x777777);
+			fontRendererObj.drawString((int)(ModCompatibility.getTCVisDiscount(this.player, "terra")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+30)/scale), (int)Math.floor((drawVisDiscounts.elementY+12)/scale), 0x777777);
+			fontRendererObj.drawString((int)(ModCompatibility.getTCVisDiscount(this.player, "aqua")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+30)/scale), (int)Math.floor((drawVisDiscounts.elementY+22)/scale), 0x777777);
+			fontRendererObj.drawString((int)(ModCompatibility.getTCVisDiscount(this.player, "ordo")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+50)/scale), (int)Math.floor((drawVisDiscounts.elementY+12)/scale), 0x777777);
+			fontRendererObj.drawString((int)(ModCompatibility.getTCVisDiscount(this.player, "perditio")*100)+"%", (int)Math.floor((drawVisDiscounts.elementX+50)/scale), (int)Math.floor((drawVisDiscounts.elementY+22)/scale), 0x777777);
 			GL11.glScalef(1/scale,1/scale,1/scale);
 		}
 		RenderHelper.enableGUIStandardItemLighting();
@@ -358,7 +358,7 @@ public class GuiTravellersInv extends GuiContainer
 				}
 				else if(slot instanceof SlotRestricted && SlotRestricted.SlotType.TINKERS_BAG==((SlotRestricted)slot).type)
 				{
-					ModCompatability.openTConKnapsack();
+					ModCompatibility.openTConKnapsack();
 					return;
 				}
 			}
@@ -377,14 +377,14 @@ public class GuiTravellersInv extends GuiContainer
 	@Override
 	protected void keyTyped(char key, int code)
     {
-		if(code==KeyHandler.openInventory.getKeyCode())
+		if(code==KeyHandler.OPEN_INVENTORY.getKeyCode())
 		{
 			this.mc.thePlayer.closeScreen();
 			return;
 		}
 		super.keyTyped(key, code);
     }
-	
+
 	public static void renderLiving(int x, int y, float scale, float xRotation, EntityLivingBase living)
 	{
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);

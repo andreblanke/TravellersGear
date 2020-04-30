@@ -13,7 +13,7 @@ import travellersgear.api.TravellersGearAPI;
 import travellersgear.client.ClientProxy;
 import travellersgear.common.blocks.TileEntityArmorStand;
 import travellersgear.common.network.MessageNBTSync;
-import travellersgear.common.util.ModCompatability;
+import travellersgear.common.util.ModCompatibility;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
@@ -22,7 +22,7 @@ public class ContainerArmorStand_old extends Container
 {
 	protected TileEntityArmorStand tileEntity;
 	public IInventory invBaubles;
-	public InventoryTG invTG;
+	public TravellersGearCreativeTabs invTG;
 	public IInventory invMari;
 	public IInventory invTConArmor;
 	private final EntityPlayer player;
@@ -35,7 +35,7 @@ public class ContainerArmorStand_old extends Container
 	public ContainerArmorStand_old(InventoryPlayer inventoryPlayer, TileEntityArmorStand te)
 	{
 		this.player = inventoryPlayer.player;
-		this.invTG = new InventoryTG(this, player);
+		this.invTG = new TravellersGearCreativeTabs(this, player);
 		if(!player.worldObj.isRemote)
 			this.invTG.stackList = TravellersGearAPI.getExtendedInventory(player);
 
@@ -63,10 +63,10 @@ public class ContainerArmorStand_old extends Container
 		if(TravellersGear.BAUBLES)
 		{
 			baubleSlotStart = playerSlots;
-			this.invBaubles = ModCompatability.getNewBaublesInv(player);
-			ModCompatability.setBaubleContainer(invBaubles, this);
+			this.invBaubles = ModCompatibility.getNewBaublesInv(player);
+			ModCompatibility.setBaubleContainer(invBaubles, this);
 			if(!player.worldObj.isRemote)
-				ModCompatability.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
+				ModCompatibility.setBaubleInvStacklist(invBaubles, BaublesApi.getBaubles(player));
 			addSlotToContainer(new SlotRestricted(this.invBaubles, 0, 22,  4, player, SlotRestricted.SlotType.BAUBLE_NECK));
 			addSlotToContainer(new SlotRestricted(this.invBaubles, 1, 22, 94, player, SlotRestricted.SlotType.BAUBLE_RING));
 			addSlotToContainer(new SlotRestricted(this.invBaubles, 2, 40, 94, player, SlotRestricted.SlotType.BAUBLE_RING));
@@ -81,7 +81,7 @@ public class ContainerArmorStand_old extends Container
 		if(TravellersGear.MARI)
 		{
 			mariSlotStart = playerSlots;
-			this.invMari = ModCompatability.getMariInventory(player);
+			this.invMari = ModCompatibility.getMariInventory(player);
 			addSlotToContainer(new SlotRestricted(this.invMari, 0, 58, 94, player, SlotRestricted.SlotType.MARI_RING));
 			addSlotToContainer(new SlotRestricted(this.invMari, 1, 76, 76, player, SlotRestricted.SlotType.MARI_BRACELET));
 			addSlotToContainer(new SlotRestricted(this.invMari, 2, 58,  4, player, SlotRestricted.SlotType.MARI_NECKLACE));
@@ -90,14 +90,14 @@ public class ContainerArmorStand_old extends Container
 		if(TravellersGear.TCON)
 		{
 			tconSlotStart = playerSlots;
-			this.invTConArmor = ModCompatability.getTConArmorInv(player);
+			this.invTConArmor = ModCompatibility.getTConArmorInv(player);
 			addSlotToContainer(new SlotRestricted(this.invTConArmor, 1, 76, 94, player, SlotRestricted.SlotType.TINKERS_GLOVE));
 			playerSlots += 1;
 		}
 		/**
-		 * 
+		 *
 		 * ARMORSTAND
-		 * 
+		 *
 		 */
 		for (int i=0; i<4; i++)
 		{
@@ -153,14 +153,14 @@ public class ContainerArmorStand_old extends Container
 	{
 		return true;
 	}
-	
+
 	@Override
 	public void onContainerClosed(EntityPlayer player)
 	{
 		super.onContainerClosed(player);
 		if (!player.worldObj.isRemote)
 		{
-			ModCompatability.setPlayerBaubles(player, invBaubles);
+			ModCompatibility.setPlayerBaubles(player, invBaubles);
 			TravellersGearAPI.setExtendedInventory(player, this.invTG.stackList);
 			//			TravellersRPG.packetPipeline.sendTo(new PacketSkillsetInvUpdate(player), (EntityPlayerMP) player);
 			TravellersGear.packetHandler.sendToAll(new MessageNBTSync(player));
@@ -170,7 +170,7 @@ public class ContainerArmorStand_old extends Container
 	@Override
 	public void putStacksInSlots(ItemStack[] stacks)
 	{
-		ModCompatability.baubleInvBlockEvents(invBaubles, true);
+		ModCompatibility.baubleInvBlockEvents(invBaubles, true);
 		this.invTG.allowEvents = false;
 		super.putStacksInSlots(stacks);
 	}
@@ -260,9 +260,9 @@ public class ContainerArmorStand_old extends Container
 							return null;
 					}
 				}
-				else if(ModCompatability.getTravellersGearSlot(stackInSlot)>=0)
+				else if(ModCompatibility.getTravellersGearSlot(stackInSlot)>=0)
 				{
-					int type = ModCompatability.getTravellersGearSlot(stackInSlot);
+					int type = ModCompatibility.getTravellersGearSlot(stackInSlot);
 					if(invTG.getStackInSlot(type)==null)
 					{
 						if(!mergeItemStack(stackInSlot, tgSlotStart+type, tgSlotStart+type+1, true))
@@ -274,9 +274,9 @@ public class ContainerArmorStand_old extends Container
 					if(player.worldObj.isRemote)
 						ClientProxy.equipmentMap.put(player.getCommandSenderName(), this.invTG.stackList);
 				}
-				else if(TravellersGear.MARI && ModCompatability.isMariJewelry(stackInSlot))
+				else if(TravellersGear.MARI && ModCompatibility.isMariJewelry(stackInSlot))
 				{
-					int type = ModCompatability.getMariJeweleryType(stackInSlot).contains("BRACELET")?1 : ModCompatability.getMariJeweleryType(stackInSlot).contains("NECKLACE")?2 : 0;
+					int type = ModCompatibility.getMariJeweleryType(stackInSlot).contains("BRACELET")?1 : ModCompatibility.getMariJeweleryType(stackInSlot).contains("NECKLACE")?2 : 0;
 					if(invMari.getStackInSlot(type)==null)
 					{
 						if(!mergeItemStack(stackInSlot, mariSlotStart+type, mariSlotStart+type+1, true))
@@ -286,7 +286,7 @@ public class ContainerArmorStand_old extends Container
 						if(!mergeItemStack(stackInSlot, playerSlots+11+type, playerSlots+11+type+1, true))
 							return null;
 				}
-				else if(TravellersGear.TCON && ModCompatability.canEquipTConAccessory(stackInSlot, 1))
+				else if(TravellersGear.TCON && ModCompatibility.canEquipTConAccessory(stackInSlot, 1))
 				{
 					if(invTConArmor.getStackInSlot(1)==null)
 					{
